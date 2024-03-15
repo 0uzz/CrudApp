@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CrudApp.Models.Dieren>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Species)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vaccinated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthYear)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Species)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vaccinated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthYear)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Ben je zeker dat je deze dier wil verwijderen?');">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    Aantal dieren: @Model.Count()
+    @{
+        int som = 0;
+        int gemiddeld = 0;
+        foreach (var dier in Model)
+        {
+            som += dier.Age;
+        }
+        if (Model.Count() != 0)
+        {
+            gemiddeld = som / Model.Count();
+        }
+    }
+    Gemiddelde leeftijd: @gemiddeld
+</p>
